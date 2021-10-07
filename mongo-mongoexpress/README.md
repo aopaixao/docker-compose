@@ -16,7 +16,7 @@ ME_WEB_PASSWD="WEBCONSOLE_PASS"
 ```
 
 ## Observação
-Os serviços mongo e mongo-express utilizam uma network previamente criada (disponível aqui). Logo, caso não queira utilizar uma network pré-existente, remova as últimas 4 linhas do docker-compose.yml.
+Os serviços mongo e mongo-express utilizam uma network previamente criada (disponível <a href="https://github.com/aopaixao/docker-compose/tree/main/network-external" >aqui</a>). Logo, caso não queira utilizar uma network pré-existente, remova as últimas 4 linhas do docker-compose.yml.
 
 
 ## Sobre
