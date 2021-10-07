@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+   mongo:
+    container_name: mongodb_standalone
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: root-db
+    volumes:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+   mongo_express:
+    image: mongo-express
+    container_name: mongoexpress_standalone
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo
+    restart: unless-stopped  
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
+      - ME_CONFIG_MONGODB_AUTH_DATABASE=${MONGO_DATABASE} 
+      - ME_CONFIG_MONGODB_AUTH_USERNAME=${MONGO_DATABASE_USER}
+      - ME_CONFIG_MONGODB_AUTH_PASSWORD=${MONGO_DATABASE_PASSWD}       
+      - ME_CONFIG_BASICAUTH_USERNAME=${ME_WEB_USERNAME}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${ME_WEB_PASSWD}
+networks:
+  default:
+    external: true
+    name: mongodb_node_network  
