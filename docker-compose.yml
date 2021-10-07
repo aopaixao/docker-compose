@@ -1,0 +1,11 @@
+version: '3.7'
+
+services: 
+  hello_world:
+    image: hello-world:latest
+    networks:
+      - mongodb_node_network
+networks:
+  mongodb_node_network:
+    name: mongodb_node_network
+    driver: bridge  
