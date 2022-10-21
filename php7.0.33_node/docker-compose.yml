@@ -1,0 +1,29 @@
+version: "3"
+services:
+    webserver:
+        image: httpd:2.4-alpine
+        container_name: apache_php
+        networks:
+            static_network_img_default:
+                ipv4_address: 172.35.1.2        
+        build:
+            context: /opt/docker_files/php_docker_files/laravel_workspace/dockerfiles
+            dockerfile: apache.dockerfile
+        ports: 
+            - "80:80"
+        #    - "443:443"
+        tty: true
+        volumes: 
+            - "/opt/docker_files/php_docker_files/laravel_workspace/host_files/:/var/www/html"
+            - "/etc/localtime:/etc/localtime:ro"
+        environment:
+            WEB_PHP_SOCKET: "php:9000"
+            WEB_PHP_TIMEOUT: 600
+            WEB_DOCUMENT_ROOT: "/var/www/html"
+        restart: unless-stopped
+networks:
+    static_network_img_default:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.35.1.0/16
