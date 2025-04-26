@@ -1,0 +1,15 @@
+version: "3"
+services:
+    apache_2.4.63:
+        image: httpd:2.4.63
+        container_name: apache_2.4.63
+        build:
+            context: ../apache_standalone
+            dockerfile: ./dockerfiles/apache.dockerfile
+        ports: 
+            - "8888:80"
+        restart: always    
+        tty: true
+        volumes: 
+            - ./host_files/:/var/www/html
+            - "/etc/localtime:/etc/localtime:ro"
